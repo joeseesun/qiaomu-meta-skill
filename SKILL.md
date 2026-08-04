@@ -1,10 +1,11 @@
 ---
 name: qiaomu-meta-skill
 description: |
-  Research, create, improve, migrate, evaluate, package, install-check, govern, and publish qiaomu-flavored agent skills from workflows, prompts, transcripts, docs, SOPs, runbooks, scripts, or notes. Use for new or existing skills, prior-art synthesis, routing/trigger boundaries, trigger or output evals, Skill IR, release gates, team reuse, and create-and-publish flows. Exclude one-off summaries, translations, ordinary docs, and tasks that explicitly should not become a skill.
+  Research, create, improve, migrate, evaluate, package, install-check, govern, and safely publish qiaomu-flavored agent skills from workflows, prompts, transcripts, docs, SOPs, runbooks, scripts, or notes. Use for new or existing skills, prior-art synthesis, routing/trigger boundaries, trigger or output evals, Skill IR, release gates, README/Profile preparation, GitHub repository and pull-request publication, versioned Releases, clean npx installation, team reuse, and create-and-publish flows. The publication path is self-contained and forbids direct default-branch pushes. Exclude one-off summaries, translations, ordinary docs, non-skill package publishing, and tasks that explicitly should not become a skill.
 metadata:
   author: Qiaomu
-  upstream_inspiration: yaojingang/yao-meta-skill
+  version: "2.8.0"
+  upstream_inspiration: yaojingang/yao-meta-skill; joeseesun/qiaomu-skill-publisher
 ---
 
 # Qiaomu Meta Skill
@@ -16,6 +17,7 @@ Build reusable Qiaomu skill packages, not long prompts.
 - Route by frontmatter `description` first.
 - Once selected, `qiaomu-meta-skill` is the single authoring authority. Do not also invoke a generic `skill-creator` unless the user explicitly requests comparison or this skill is unavailable.
 - Built-in prior-art discovery belongs to this skill. Do not install, load, or delegate to a separate discovery skill.
+- Built-in GitHub publishing belongs to this skill. Do not require or invoke a separate publisher skill after this package is selected.
 - Keep the package root `SKILL.md` to routing and the minimal workflow. Put judgment in `references/`, deterministic behavior in `scripts/`, regression cases in `evals/`, and evidence in `reports/`.
 - A package has one discoverable root `SKILL.md`; embedded examples and fixtures use `SKILL.example.md` or `SKILL.fixture.md`.
 - Do not turn one-off summaries, translations, explanations, or brainstorming into skills.
@@ -93,7 +95,7 @@ Prefer intent fidelity, source fidelity, and decision rules over an expanding to
 10. Keep mutations within the requested action boundary and preserve rollback for risky changes.
 11. Validate package, unit tests, trigger behavior, context budget, secret/trust boundaries, and evidence claims.
 12. Produce the creation handoff and clearly label missing evidence.
-13. When publication is requested, use feature branch → validation → PR → merge → release/install verification; never push directly to the default branch.
+13. When publication is requested, read [Self-Contained Skill Publishing](references/publishing.md), then use the bundled publisher for feature branch → validation → PR → merge → release/install verification; never push directly to the default branch.
 
 Core commands:
 
@@ -102,6 +104,7 @@ python3 scripts/validate_skill.py .
 python3 scripts/export_skill_ir.py . --output reports/skill-ir.json
 python3 scripts/trigger_eval.py . --cases evals/trigger_cases.json --output reports/trigger-eval.json
 python3 scripts/release_check.py . --phase local --run-tests
+python3 scripts/publish_skill.py /path/to/skill --dry-run
 ```
 
 ## Gate Ladder
@@ -130,13 +133,13 @@ The final creation handoff must name the **reference skills studied**, give **ca
 ## Publish Flow
 
 1. Treat README as a product page: value, install, natural examples, prerequisites, outputs, configuration, risks, and troubleshooting.
-2. Run local readiness: `python3 scripts/release_check.py . --phase local --run-tests`.
-3. Commit on a feature branch, push, open a PR, and run `--phase pr`.
-4. Merge through review; create the versioned release required by the project.
-5. Run `--phase published --install-check` against the public revision.
-6. Do not report publication complete until remote version and clean installation are verified.
+2. Audit without mutation when useful: `python3 scripts/publish_skill.py /path/to/skill --dry-run`.
+3. Only after an explicit publish request, run `python3 scripts/publish_skill.py /path/to/skill`.
+4. The bundled publisher prepares MIT LICENSE, README and Qiaomu profile assets; resolves skill/repository identity; blocks secrets and reused release versions; creates or reuses a GitHub repository; and publishes only through a feature branch and PR.
+5. Merge is blocked by conflicts, failed/pending checks or requested changes. Successful publication creates `vX.Y.Z`, verifies `npx skills add --list`, performs an isolated install, and runs the published release gate.
+6. Do not report publication complete until the remote default version, GitHub Release, discovery and clean installation are verified.
 
-README method: [GitHub README Playbook](references/github-readme-playbook.md). Operation method: [SkillOps Loop](references/skillops-loop.md).
+Detailed CLI and safety decisions: [Self-Contained Skill Publishing](references/publishing.md). README method: [GitHub README Playbook](references/github-readme-playbook.md). Operation method: [SkillOps Loop](references/skillops-loop.md).
 
 ## Qiaomu Defaults
 
@@ -150,4 +153,4 @@ README method: [GitHub README Playbook](references/github-readme-playbook.md). O
 
 - Design: [Skill Engineering Method](references/skill-engineering-method.md), [Skill Archetypes](references/skill-archetypes.md), [Intent Dialogue](references/intent-dialogue.md), [Non-Skill Decision Tree](references/non-skill-decision-tree.md)
 - Evidence: [Eval Playbook](references/eval-playbook.md), [Output Eval](references/output-eval-method.md), [Skill IR](references/skill-ir-method.md), [Governance](references/governance.md)
-- Release: [Review And Release Gates](references/review-release-gates.md), [GitHub README](references/github-readme-playbook.md), [SkillOps](references/skillops-loop.md)
+- Release: [Self-Contained Publishing](references/publishing.md), [Review And Release Gates](references/review-release-gates.md), [GitHub README](references/github-readme-playbook.md), [SkillOps](references/skillops-loop.md)

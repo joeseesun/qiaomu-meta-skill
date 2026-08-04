@@ -15,21 +15,22 @@
 npx skills add joeseesun/qiaomu-meta-skill
 ```
 
-**2.7.0 已验证：** 21/21 单元测试、19/19 触发评测、0 个包验证问题；skills.sh 与 SkillsMP 严格双目录实测通过。
+**2.8.0 已验证：** 32/32 单元测试、23/23 触发评测、0 个包验证问题；skills.sh 与 SkillsMP 双目录研究和自包含安全发布 dry-run 均通过。
 
 ## 这是什么
 
 `qiaomu-meta-skill` 是乔木的 skill 工厂。它基于 [`yaojingang/yao-meta-skill`](https://github.com/yaojingang/yao-meta-skill) 的 Skill OS 2.0 思路做了轻量化改造：保留语义契约、触发评估、发布门禁和运维反馈，但默认先做成能真实复用的轻包。
 
-它是乔木 skill 创建流程的唯一权威，内部已经包含 skills.sh + SkillsMP 双目录发现、GitHub 验源、对比和综合方法。命中后不再叠加 generic `skill-creator`，也不需要下载或安装其他 discovery skill。
+它是乔木 skill 创建与发布流程的唯一权威，内部已经包含 skills.sh + SkillsMP 双目录发现、GitHub 验源、对比和综合方法，以及 LICENSE、README、乔木 Profile、功能分支、PR、Release、发现和干净安装的完整发布器。命中后不再叠加 generic `skill-creator`，也不需要下载或安装其他 discovery / publisher skill。
 
-## 2.7.0 升级亮点
+## 2.8.0 升级亮点
 
-- SkillsMP 遇到断流、超时、限流和临时服务错误时会自动重试；普通请求错误不会盲目重试。
-- 新增统一双目录研究器，一次查询 skills.sh 与 SkillsMP，跨目录归并候选但不混合安装量和仓库 stars。
-- 新增 `local / pr / published` 三阶段发布检查，真实核对版本、报告、secret、远端分支、PR、Release 和干净安装。
-- 验证器会阻断 Manifest、Skill IR、Trigger Report 不一致，并监督生产级 `SKILL.md` 上下文预算。
-- 自身 `SKILL.md` 从约 16 KB 收敛到约 10 KB，详细方法继续保留在 references。
+- 新增 `scripts/publish_skill.py`，元 Skill 现在真正自包含发布能力，不再依赖 `qiaomu-skill-publisher`。
+- 完整吸收 MIT LICENSE、README 产品页、乔木 Profile/二维码、仓库名识别、`npx --list` 和临时目录安装验证。
+- 新仓库先建立最小默认分支，再让真实 Skill 通过 `codex/` 功能分支和 PR 进入；现有仓库同样禁止直推 `main/master`。
+- PR 冲突、失败/未完成检查、requested changes 会阻断自动合并；已存在的 `vX.Y.Z` 会阻断同版本重发。
+- 成功合并后创建 GitHub Release，核对远端版本并做隔离 HOME 干净安装；本机同步会先备份旧版本，不直接删除。
+- 保留 2.7 的双目录研究、三阶段发布检查、版本/报告一致性、secret scan 和上下文预算门禁。
 
 它适合：
 
@@ -98,6 +99,42 @@ python3 ~/.agents/skills/qiaomu-meta-skill/scripts/validate_skill.py ~/.agents/s
 11. 创建完成时向用户说明参考了哪些 skill、分别学习了什么、舍弃了什么、乔木版有哪些原创亮点，以及哪些优势已经验证。
 12. 公共发布时走验证、安装证明、分支/PR/合并流程。
 
+## 自包含发布
+
+只检查，不修改本地文件或 GitHub：
+
+```bash
+python3 scripts/publish_skill.py /path/to/skill --dry-run
+```
+
+只补齐 LICENSE、README 与乔木 Profile：
+
+```bash
+python3 scripts/publish_skill.py /path/to/skill --prepare-only
+```
+
+用户明确要求发布后，执行完整流程：
+
+```bash
+python3 scripts/publish_skill.py /path/to/skill
+```
+
+这条命令会完成：包验证与 secret scan → 功能分支 → PR → 检查与讨论状态读取 → squash merge → `vX.Y.Z` Release → `npx skills add --list` → 隔离安装 → 本机正式目录同步。
+
+如需把合并留给人工或 CI：
+
+```bash
+python3 scripts/publish_skill.py /path/to/skill --no-merge
+```
+
+已发布版本只做验证：
+
+```bash
+python3 scripts/publish_skill.py /path/to/skill --verify-only
+```
+
+详细参数与安全边界见 [`references/publishing.md`](references/publishing.md)。
+
 ## 先研究，再创造
 
 先例发现已内置，不检查也不安装其他 skill。优先用统一研究器查询 2–4 组关键词：
@@ -142,6 +179,7 @@ python3 scripts/trigger_eval.py . --cases evals/trigger_cases.json --output repo
 python3 scripts/search_skillsmp.py "seo" --limit 5 --sort stars
 python3 scripts/research_prior_art.py "skill creator" "skill evaluation" --strict --summary
 python3 scripts/release_check.py . --phase local --run-tests
+python3 scripts/publish_skill.py . --dry-run
 python3 -m py_compile scripts/*.py
 python3 -m unittest discover -s tests -p 'test_*.py'
 ```
@@ -169,6 +207,7 @@ Validated: package contract OK
 - `scripts/`：确定性验证、IR 导出、触发评估
 - `scripts/research_prior_art.py`：双目录查询、标准化、跨目录归并和降级证据
 - `scripts/release_check.py`：本地、PR、已发布三阶段完成门禁
+- `scripts/publish_skill.py`：LICENSE/README/Profile 准备、仓库、功能分支、PR、Release、发现、安装和安全同步
 - `evals/`：触发和输出评估样例
 - `reports/`：评估、决策和证据，默认由脚本生成
 
@@ -192,6 +231,7 @@ Validated: package contract OK
 - README 能让陌生用户知道它能做什么、为什么值得装、怎么安装和怎么排错
 - `scripts/validate_skill.py`、`scripts/export_skill_ir.py`、`scripts/trigger_eval.py` 能通过
 - `scripts/release_check.py --phase local --run-tests` 没有阻断项
+- `scripts/publish_skill.py . --dry-run` 能解析正确仓库与版本，且报告 `default_branch_push: forbidden`
 - 根目录之外没有会被递归发现的 `SKILL.md`
 - 声称人工盲评时，答案钥匙与匿名评审包分离，且 reviewer、判断、理由、先判断后揭晓的 attestation 齐全
 - 没有把 API key、cookie、私有路径或未验证的“已完成”声明写进公开文件
@@ -223,10 +263,15 @@ Validated: package contract OK
 | 发布后别人装不上 | 没有做 install proof 或遗漏依赖 | 跑安装验证，补前置条件和验证命令 |
 | SkillsMP 偶发 `IncompleteRead` | 上游分块响应中断 | 保留默认重试；仍失败时统一研究器会记录 `missing evidence`，不要伪造目录结果 |
 | 本地和 GitHub 版本不一致 | 只改了 Manifest 或尚未完成 PR/Release | 依次运行 `release_check.py --phase local/pr/published` |
+| 发布器拒绝当前版本 | GitHub 已存在同名 `vX.Y.Z` Release | 更新 `manifest.json`、Skill IR、触发报告和交接报告中的版本后再发布 |
+| 发布器拒绝合并 PR | 有冲突、失败/未完成检查或 requested changes | 先处理 PR 讨论与检查，不绕过门禁 |
+| 找不到乔木 Profile 资产 | Skill 包不完整或资产被删 | 重新安装完整 `qiaomu-meta-skill`；发布器只使用自身 bundled assets |
 
 ## 上游致谢
 
-本 skill 的 2.0 升级参考了 [`yaojingang/yao-meta-skill`](https://github.com/yaojingang/yao-meta-skill) 的 Skill IR、评估证据、Review Studio、信任边界和 SkillOps 思路。乔木版保留方法骨架，默认执行更轻、更偏中文工作流和 Qiaomu 发布习惯。
+本 skill 的 2.0 升级参考了 [`yaojingang/yao-meta-skill`](https://github.com/yaojingang/yao-meta-skill) 的 Skill IR、评估证据、Review Studio、信任边界和 SkillOps 思路。2.8 的自包含发布能力学习自 [`joeseesun/qiaomu-skill-publisher`](https://github.com/joeseesun/qiaomu-skill-publisher)，保留其 README/Profile/License/安装验证能力，并用功能分支、PR、版本不可变和非破坏同步替换直接推默认分支与覆盖目录。
+
+Upstream inspiration: https://github.com/yaojingang/yao-meta-skill; https://github.com/joeseesun/qiaomu-skill-publisher
 
 ## 限制、安全与支持
 
@@ -285,12 +330,13 @@ python3 ~/.agents/skills/qiaomu-meta-skill/scripts/validate_skill.py \
 - “Research the strongest related skills, then synthesize and publish a better governed package.”
 - “Audit this skill's trigger boundary and release evidence without changing files.”
 
-### What 2.7.0 verifies
+### What 2.8.0 verifies
 
 - resilient SkillsMP requests with bounded retries and explicit degradation
 - one dual-catalog prior-art runner without fake cross-catalog scoring
 - manifest, Skill IR, trigger-report, secret, Git, PR, release, and clean-install gates
-- 21/21 unit tests and 19/19 trigger cases in the published source revision
+- self-contained LICENSE/README/Profile preparation, feature-branch-only GitHub publishing, release immutability, PR check/review gating, discovery and clean installation
+- 32/32 unit tests and 23/23 trigger cases in the local 2.8 release candidate
 
 ### Limits
 

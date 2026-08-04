@@ -1,5 +1,48 @@
 # Prior-Art Research
 
+## Self-contained publishing integration 2.8
+
+- Researched at: 2026-08-04
+- Reference: [`joeseesun/qiaomu-skill-publisher`](https://github.com/joeseesun/qiaomu-skill-publisher) at `8bd944b7723e710d38f9fa4034e8ba6addbbdfed`
+- Scope: absorb its useful publishing behavior into `qiaomu-meta-skill` so creation and publication no longer require a second skill
+- License: MIT
+
+### Keep
+
+- strict frontmatter parsing and repository/skill-name separation
+- MIT LICENSE creation
+- README generation and placeholder checks
+- Qiaomu profile/QR asset injection with stable markers
+- `npx skills add --list` discovery and real temporary installation
+- optional canonical `~/.agents/skills/<name>` synchronization
+
+### Adapt
+
+- Profile assets now come from `qiaomu-meta-skill/assets/qiaomu-profile`, removing the runtime dependency on a separate `qiaomu-profile` skill.
+- README validation combines publisher placeholders with the meta validator's product-page, upstream-credit and evidence requirements.
+- Repository creation uses an initial baseline followed by feature-branch PR publication, including for brand-new repositories.
+- Local synchronization moves an existing target to `~/.agents/skill-backups` before replacement, outside recursive skill discovery.
+
+### Reject
+
+- `git push origin main` and `git push HEAD:main`: conflict with governed review and the global no-default-branch rule.
+- swallowing push failures and still returning a repository URL: creates false completion claims.
+- deleting the existing canonical skill directory with `shutil.rmtree`: risks data loss and removes rollback.
+- verifying after an unsafe direct push: install proof cannot repair a broken publication path.
+- reusing an existing release version for new content: violates immutable release expectations.
+
+### Invent
+
+- one self-contained `scripts/publish_skill.py` with read-only dry-run, prepare-only, PR-only, full publish and verify-only modes
+- PR mergeability, requested-review and status-check gate
+- version immutability guard before publication
+- reuse of the bundled `local / pr / published` release checker inside the publisher
+- structured JSON results that separate repository, PR, release, discovery, installation and local-sync evidence
+
+### Evidence boundary
+
+The integration can validate packaging and publication mechanics. It cannot establish domain output quality, user adoption or business outcomes. Those remain separate output/runtime/human evidence or `missing evidence`.
+
 - Researched at: 2026-07-30
 - Scope: improve `qiaomu-meta-skill` with a repeatable discover-compare-synthesize gate
 - Queries: `skill creator`, `skill evaluation`, `meta skill`, `create agent skills`

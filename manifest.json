@@ -1,14 +1,14 @@
 {
   "name": "qiaomu-meta-skill",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "owner": "Qiaomu",
-  "updated_at": "2026-08-03",
+  "updated_at": "2026-08-04",
   "status": "active",
   "maturity_tier": "governed",
   "lifecycle_stage": "library",
   "context_budget_tier": "production",
   "review_cadence": "quarterly",
-  "upstream_inspiration": "https://github.com/yaojingang/yao-meta-skill",
+  "upstream_inspiration": "https://github.com/yaojingang/yao-meta-skill; https://github.com/joeseesun/qiaomu-skill-publisher",
   "upstream_sync": {
     "reviewed_commit": "e15472e1f5dc96f79ea0259bf9fdf67598cea356",
     "reviewed_at": "2026-07-31",
@@ -67,6 +67,16 @@
     "remote_version_check",
     "secret_scan",
     "blind_review_integrity",
-    "evidence_bound_public_claims"
+    "evidence_bound_public_claims",
+    "self_contained_skill_publisher",
+    "mit_license_preparation",
+    "bundled_qiaomu_profile_injection",
+    "repository_skill_name_separation",
+    "feature_branch_only_publication",
+    "pull_request_review_and_check_gate",
+    "released_version_immutability",
+    "github_release_creation",
+    "npx_discovery_and_clean_install",
+    "non_destructive_local_sync"
   ]
 }

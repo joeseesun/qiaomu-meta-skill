@@ -35,6 +35,13 @@ class BuiltInDiscoveryTest(unittest.TestCase):
         self.assertIn("SkillsMP", skill_text)
         self.assertIn("built-in prior-art discovery", skill_text.lower())
 
+    def test_publishing_is_built_in(self) -> None:
+        skill_text = (ROOT / "SKILL.md").read_text(encoding="utf-8").lower()
+        self.assertIn("built-in github publishing", skill_text)
+        self.assertIn("scripts/publish_skill.py", skill_text)
+        self.assertTrue((ROOT / "scripts" / "publish_skill.py").is_file())
+        self.assertNotIn("qiaomu-skill-publisher/scripts/publish_skill.py", skill_text)
+
 
 if __name__ == "__main__":
     unittest.main()

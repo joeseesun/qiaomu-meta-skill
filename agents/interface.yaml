@@ -1,7 +1,7 @@
 interface:
   display_name: "Qiaomu Meta Skill"
-  short_description: "Research, create, migrate, evaluate, and release Qiaomu skills"
-  default_prompt: "Use $qiaomu-meta-skill as the single skill-authoring authority. Use its resilient built-in dual-catalog research runner across skills.sh and SkillsMP, deduplicate and verify candidates in GitHub source, synthesize proven mechanisms without copying, and create, improve, migrate, audit, or release my Qiaomu skill with proportional evals and executable release gates. In the final handoff, name the skills studied, explain what was learned and rejected, and separate design advantages from validated advantages and hypotheses. Do not install another discovery or creator skill unless I explicitly request it. Respect audit-only requests by reporting findings without editing files."
+  short_description: "Research, create, evaluate, and safely publish Qiaomu skills end to end"
+  default_prompt: "Use $qiaomu-meta-skill as the single skill-authoring and publishing authority. Use its resilient built-in dual-catalog research runner across skills.sh and SkillsMP, deduplicate and verify candidates in GitHub source, synthesize proven mechanisms without copying, and create, improve, migrate, audit, or release my Qiaomu skill with proportional evals and executable release gates. When I explicitly request publication, use the bundled self-contained publisher to prepare LICENSE, README and Qiaomu profile assets, then publish through a feature branch, PR, versioned GitHub Release, npx discovery and isolated clean install. Never push directly to main/master, never reuse a released version, and do not invoke a separate creator, discovery or publisher skill. In the final handoff, name the skills studied, explain what was learned and rejected, and separate design advantages from validated advantages and hypotheses. Respect audit-only requests by reporting findings without editing files."
   examples:
     - "把这个流程整理成一个 qiaomu skill"
     - "优化这个已有 skill，补 trigger eval 和发布门禁"
@@ -9,6 +9,8 @@ interface:
     - "先找下载量高、口碑证据强的相关 skill，再取长补短创建一个更好的乔木 skill"
     - "迁移这个旧 skill，并检查安装入口和递归发现风险"
     - "只审计这个 skill 的路由与输出评估，先不要改文件"
+    - "把这个 qiaomu skill 发布到 GitHub，并完成 PR、Release 和干净安装验证"
+    - "先 dry-run 检查这个 skill 是否具备安全发布条件"
 compatibility:
   canonical_format: "agent-skills"
   adapter_targets:
@@ -31,7 +33,7 @@ compatibility:
   permissions:
     network: "skills.sh, SkillsMP API/catalog, and source-repository discovery/review; external research when needed; publishing only when requested"
     file_write: "skill package files only unless user explicitly requests sync, publish, or install"
-    subprocess: "npx --yes skills find, bundled resilient dual-catalog research, validation, release-readiness, and packaging scripts; no discovery-skill installation"
+    subprocess: "npx --yes skills find/add, bundled resilient dual-catalog research, validation, safe Git/gh PR/Release publication, clean-install verification, and packaging scripts; no separate discovery or publisher skill"
     interactive: "avoid unless GitHub, installer, or platform auth requires it"
   degradation:
     openai: "metadata-adapter"
@@ -67,3 +69,5 @@ gates:
     - "blind-review integrity when human evidence is claimed"
     - "local, PR, and published release readiness checked by executable gates"
     - "manifest, Skill IR, trigger report, remote version, and release evidence remain consistent"
+    - "bundled publisher forbids direct default-branch push and released-version reuse"
+    - "README, MIT LICENSE, bundled Qiaomu profile, PR discussion/check state, Release, discovery and clean install are verified"

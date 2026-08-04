@@ -104,7 +104,9 @@
     "brainstorm",
     "just explain",
     "translate only",
-    "one off"
+    "one off",
+    "普通 Python 包",
+    "发布到 PyPI"
   ],
   "should_trigger": [
     {
@@ -150,6 +152,18 @@
     {
       "text": "Check whether this agent skill package installs cleanly and whether nested examples can be mis-discovered.",
       "family": "en_install_discovery_audit"
+    },
+    {
+      "text": "把这个 qiaomu skill 发布到 GitHub，并完成 PR、Release 和干净安装验证",
+      "family": "cn_full_publish"
+    },
+    {
+      "text": "先 dry-run 检查这个乔木 skill 的 README、Profile、版本和发布条件，不要写 GitHub",
+      "family": "cn_publish_dry_run"
+    },
+    {
+      "text": "把这个 qiaomu skill 直接推 main 发布，如果不安全就改成规范 PR 流程",
+      "family": "cn_unsafe_publish_correction"
     }
   ],
   "should_not_trigger": [
@@ -172,6 +186,10 @@
     {
       "text": "Just explain the difference between prompts and skills.",
       "family": "explain_only"
+    },
+    {
+      "text": "把这个普通 Python 包发布到 PyPI",
+      "family": "non_skill_package_publish"
     }
   ],
   "near_neighbor": [

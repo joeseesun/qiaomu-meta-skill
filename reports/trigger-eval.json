@@ -10,8 +10,8 @@
   ],
   "missing_description_concepts": [],
   "summary": {
-    "total": 19,
-    "passed": 19,
+    "total": 23,
+    "passed": 23,
     "false_positive": 0,
     "false_negative": 0,
     "pass_rate": 1.0
@@ -171,6 +171,52 @@
           "skill"
         ],
         "negative_pattern": null
+      },
+      {
+        "prompt": "把这个 qiaomu skill 发布到 GitHub，并完成 PR、Release 和干净安装验证",
+        "family": "cn_full_publish",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.8,
+        "matched_concepts": [
+          "authoring_action",
+          "eval_release",
+          "qiaomu",
+          "skill"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "先 dry-run 检查这个乔木 skill 的 README、Profile、版本和发布条件，不要写 GitHub",
+        "family": "cn_publish_dry_run",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.8,
+        "matched_concepts": [
+          "authoring_action",
+          "eval_release",
+          "qiaomu",
+          "skill"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "把这个 qiaomu skill 直接推 main 发布，如果不安全就改成规范 PR 流程",
+        "family": "cn_unsafe_publish_correction",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 1.0,
+        "matched_concepts": [
+          "authoring_action",
+          "eval_release",
+          "qiaomu",
+          "skill",
+          "source_material"
+        ],
+        "negative_pattern": null
       }
     ],
     "should_not_trigger": [
@@ -227,6 +273,19 @@
           "source_material"
         ],
         "negative_pattern": "just explain"
+      },
+      {
+        "prompt": "把这个普通 Python 包发布到 PyPI",
+        "family": "non_skill_package_publish",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.4,
+        "matched_concepts": [
+          "authoring_action",
+          "eval_release"
+        ],
+        "negative_pattern": "普通 Python 包"
       }
     ],
     "near_neighbor": [

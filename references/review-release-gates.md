@@ -56,6 +56,18 @@ python3 scripts/release_check.py . --phase pr --run-tests
 python3 scripts/release_check.py . --phase published --run-tests --install-check
 ```
 
+完整发布由同包脚本执行，不再依赖独立 publisher skill：
+
+```bash
+# 只读审计
+python3 scripts/publish_skill.py /path/to/skill --dry-run
+
+# 用户明确要求发布后：准备 → 功能分支 → PR → 合并 → Release → 安装验证
+python3 scripts/publish_skill.py /path/to/skill
+```
+
+发布器必须阻断直推默认分支、同版本重发、secret、冲突、失败/未完成检查和 requested changes。详细行为见 [Self-Contained Skill Publishing](publishing.md)。
+
 `local` 阶段的 dirty worktree 是警告，因为正在开发；到了 `pr` 和 `published` 阶段则是阻断。缺失 provider/human output evidence 或尚未运行 install check 必须保留为警告或 `missing evidence`，不能伪装成已验证。
 
 只有 `reports/output-evidence.json` 明确记录通过的 `provider_backed` 或 `human_blind_review` 证据，发布检查才把输出证据记为 `pass`。行为规格、静态 fixture 或仅存在一个 scorecard 文件仍然是警告，不能靠文件名冒充验证。

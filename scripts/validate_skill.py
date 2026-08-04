@@ -165,7 +165,7 @@ def validate(root: Path) -> dict[str, Any]:
             for forbidden in FORBIDDEN_DISCOVERY_DEPENDENCIES:
                 if forbidden in normalized:
                     failures.append(f"{rel} contains external discovery-skill dependency: {forbidden}")
-        for relative in ("scripts/research_prior_art.py", "scripts/release_check.py"):
+        for relative in ("scripts/research_prior_art.py", "scripts/release_check.py", "scripts/publish_skill.py"):
             if not (root / relative).is_file():
                 failures.append(f"qiaomu-meta-skill missing built-in factory script: {relative}")
 
