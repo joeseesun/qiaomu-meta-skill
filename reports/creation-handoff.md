@@ -2,9 +2,9 @@
 
 ## Result
 
-- Skill: `qiaomu-meta-skill` 2.8.0
+- Skill: `qiaomu-meta-skill` 2.8.1
 - Job: research, create, evaluate, package, govern, and safely publish reusable Qiaomu skills through one self-contained workflow
-- Status: local 2.8.0 feature-branch implementation; public PR/Release/install evidence is intentionally not claimed because publication was not requested in this task
+- Status: README showcase and privacy-safe Codex skill-history catalog prepared on a feature branch; public 2.8.1 evidence remains `missing evidence` until the release workflow completes
 
 ## Reference skills studied
 
@@ -44,17 +44,19 @@
 - `design advantage`: the integrated publisher cannot push directly to `main/master`, reuse a released version, silently ignore a failed push, or delete an installed skill without rollback.
 - `validated advantage`: publisher unit tests cover URL parsing, profile idempotence, generated README quality, default-branch rejection, pending-check blocking, read-only dry-run and bundled assets.
 - `hypothesis`: the richer handoff should improve user trust and adoption decisions, but a human comprehension or install-conversion study remains `missing evidence`.
+- `design advantage`: the README now leads with the user outcome, a one-line installation command, a capability comparison, natural-language examples, and 28 evidence-backed practice cases instead of internal architecture.
+- `validated advantage`: the Codex history catalog distinguishes 18 public repositories from 10 local/private cases and separates created/updated packages from researched prior art without publishing raw dialogue or local paths.
 
 ## Verification and limits
 
 - Deterministic package validation: passed with 0 failures and 0 warnings.
 - Trigger eval: passed 23/23, with 0 false positives and 0 false negatives.
-- Unit tests: passed 32/32, including 10 publisher-specific regressions.
+- Unit tests: passed 35/35, including 10 publisher-specific regressions and 3 Codex history catalog integrity/privacy checks.
 - Self-contained publisher dry-run against this repository: passed, resolved `joeseesun/qiaomu-meta-skill`, planned no unwanted file changes, and reported default-branch push as forbidden.
 - Independent `--prepare-only` fixture: passed; created MIT LICENSE, product README, three bundled Profile assets and an idempotent profile block, then passed the package validator with zero warnings.
-- Integrated discovery verifier against the currently published repository: passed; `npx skills add joeseesun/qiaomu-meta-skill --list` found `qiaomu-meta-skill`. This verifies the verifier path, not the unpublished 2.8 revision.
+- Integrated discovery verifier against the currently published repository: passed; `npx skills add joeseesun/qiaomu-meta-skill --list` found `qiaomu-meta-skill`. This verifies the verifier path; 2.8.1 requires its own post-release proof.
 - Live dual-catalog smoke: passed in strict mode for `skill evaluation`; skills.sh and SkillsMP both completed, producing 9 merged candidate families with source metrics kept separate.
 - Local release readiness: passed with 6 pass, 3 warn, and 0 block. Warnings accurately record the dirty worktree, unavailable clean-install proof before a remote revision exists, and missing provider/human output evidence.
-- PR, merged default-branch, GitHub release, and public clean-install proof for 2.8.0: `missing evidence` because the user requested integration, not publication.
+- PR, merged default-branch, GitHub release, and public clean-install proof for 2.8.1: `missing evidence` until the current release workflow completes.
 - Provider-backed head-to-head output evaluation: `missing evidence`.
 - Human blind comparison of handoff persuasiveness: `missing evidence`.

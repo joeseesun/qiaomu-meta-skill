@@ -3,7 +3,7 @@
   "generated_at": "2026-08-04",
   "package": {
     "name": "qiaomu-meta-skill",
-    "version": "2.8.0",
+    "version": "2.8.1",
     "owner": "Qiaomu",
     "maturity_tier": "governed",
     "lifecycle_stage": "library",
@@ -141,10 +141,10 @@
       "evals/trigger_cases.json"
     ],
     "reports": [
+      "reports/codex-skill-catalog.md",
       "reports/creation-handoff.md",
       "reports/iteration-2026-08-03-v2.7.md",
       "reports/iteration-2026-08-03.md",
-      "reports/local-release-check-2.8.json",
       "reports/prior-art-research.md",
       "reports/skill-ir.json",
       "reports/skillsmp-integration-2026-08-03.md",
