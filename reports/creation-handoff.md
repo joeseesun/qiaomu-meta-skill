@@ -1,3 +1,9 @@
+## v2.9.1 — 2026-10-13
+
+- Publisher fix: profile insertion now ends README with exactly one newline (it used to leave a blank line at EOF that failed `git diff --check`), with an idempotence test.
+- Release check fix: assigned-credential scan skips `${ENV}` references and self-describing fixtures (fixture/synthetic/opaque/dummy/placeholder/example/redacted) while still flagging realistic values; regression test added.
+- Publisher fix: after a squash merge, local default commits that were carried by the PR are realigned to the remote default instead of failing `git pull --ff-only` (seen on qiaomu-info-card-designer).
+
 ## v2.9.0 — 2026-10-13
 
 - Added items 17–19 to `references/skill-engineering-method.md` (size tiers with time estimates, graded examples, checks that must reach zero) and a matching Qiaomu default in `SKILL.md`.
