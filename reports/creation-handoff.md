@@ -1,4 +1,14 @@
+## v2.9.0 — 2026-10-13
+
+- Added items 17–19 to `references/skill-engineering-method.md` (size tiers with time estimates, graded examples, checks that must reach zero) and a matching Qiaomu default in `SKILL.md`.
+- Reference studied: `wheresryan22/anatomy` (MIT); methods adapted, no text or code copied. Highlights are design advantages (hypothesis) until output evidence exists.
+- Validation: package validator and unit tests rerun locally.
+
 # Qiaomu Meta Skill Creation Handoff
+
+## 2.8.7 · 2026-09-29
+
+- SkillOps 新增「用户说为什么又忘了」的处理：修规则可达性（扩大适用范围、根工作流前置必读、具体默认、加入验收、记录教训）。来源：qiaomu-obsidian-dev 1.12.0 的 Vercel 中性视觉修复。
 
 ## Result
 
@@ -60,3 +70,18 @@
 - PR, merged default-branch, GitHub release, and public clean-install proof for 2.8.1: `missing evidence` until the current release workflow completes.
 - Provider-backed head-to-head output evaluation: `missing evidence`.
 - Human blind comparison of handoff persuasiveness: `missing evidence`.
+
+## 2.8.2 (2026-09-25)
+
+- `validate_skill.py` now reports invalid YAML frontmatter as a clear failure instead of crashing with a traceback. Found while creating `qiaomu-product-video`: an unquoted description containing `Excludes:` broke YAML parsing.
+- Compact workflow step 6 reminds authors to quote descriptions containing `: `.
+
+
+## 2.8.3 (2026-09-27)
+
+- SkillOps: added two hard checks for iterating existing skills — surface drift (README / interface / manifest vs SKILL.md) and perceptual A/B verification for media-producing changes — plus keep/adapt/reject mapping for external case research. Source: qiaomu-product-video 1.3.0 iteration, where README/interface still named a replaced render engine and motion blur needed visual inspection to find subframe stepping.
+- [hypothesis] reduces stale public claims in future iterations — missing evidence until the next iteration applies it.
+
+## 2.8.4 · 2026-09-27
+
+- Eval playbook: when improving an existing skill, mine the user's recent real requests for trigger verbs and nouns (e.g. 发版 / 上架 besides 发布). Found while updating qiaomu-obsidian-dev 1.10.0, where a release-speed prompt missed the trigger until those words were added.

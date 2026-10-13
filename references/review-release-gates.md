@@ -43,6 +43,16 @@ python3 scripts/trigger_eval.py . --cases evals/trigger_cases.json
 - output eval 或人工 review 缺失时标记 `missing evidence`；盲评只有在答案隔离、判断先于揭晓、reviewer/decision/reason 齐全时才算完成证据。
 - 不把计划、草稿、未审 telemetry 当证据。
 
+## 给已有 Skill 新增硬门
+
+用户反馈要求“以后默认这样”时，优先把它编码成可执行的门，而不是只加一段文字规则。新增硬门时：
+
+1. 先用 `git stash` 跑一次旧的 smoke 和 validator，记下基线；改完再跑一次，只把新增的失败算作回归，已有 warning 不要记在本次改动上。
+2. 脚手架生成的必填字段（例如 `TODO` 占位）会被新门拦下；同步更新现有 smoke 里“填好分镜后应当 ready”的步骤，并补一条“未填写时被拦截”的断言。
+3. 新门至少有一条正例和一条反例 fixture（例如黑屏首帧失败、定帧封面通过），循环片等豁免情况也要单独断言。
+4. 路径含非 ASCII 字符时，不要直接用 `new URL(import.meta.url).pathname` 拼路径，要用 `fileURLToPath`，否则会写到百分号编码的目录里。
+5. 批量产出（同一请求生成多个成品，如多支视频、多张图）时，把“成品之间要不一样”做成可检查的门，而不是靠口头提醒：给每个成品一个 `concept`（原型、点名的参考作品、机关、风格维度），再加一个跨成品的 diversity 检查，相同原型/风格/结构直接阻断。共用的只能是工具与管线，不能是骨架。
+
 ## 可执行发布检查
 
 ```bash

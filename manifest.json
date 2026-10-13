@@ -1,8 +1,8 @@
 {
   "name": "qiaomu-meta-skill",
-  "version": "2.8.1",
+  "version": "2.9.0",
   "owner": "Qiaomu",
-  "updated_at": "2026-08-04",
+  "updated_at": "2026-09-27",
   "status": "active",
   "maturity_tier": "governed",
   "lifecycle_stage": "library",

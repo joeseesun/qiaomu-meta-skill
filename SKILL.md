@@ -4,7 +4,7 @@ description: |
   Research, create, improve, migrate, evaluate, package, install-check, govern, and safely publish qiaomu-flavored agent skills from workflows, prompts, transcripts, docs, SOPs, runbooks, scripts, or notes. Use for new or existing skills, prior-art synthesis, routing/trigger boundaries, trigger or output evals, Skill IR, release gates, README/Profile preparation, GitHub repository and pull-request publication, versioned Releases, clean npx installation, team reuse, and create-and-publish flows. The publication path is self-contained and forbids direct default-branch pushes. Exclude one-off summaries, translations, ordinary docs, non-skill package publishing, and tasks that explicitly should not become a skill.
 metadata:
   author: Qiaomu
-  version: "2.8.1"
+  version: "2.10.0"
   upstream_inspiration: yaojingang/yao-meta-skill; joeseesun/qiaomu-skill-publisher
 ---
 
@@ -88,7 +88,7 @@ Prefer intent fidelity, source fidelity, and decision rules over an expanding to
 3. Pass prior-art discovery or record why it is not applicable or missing evidence.
 4. Pass the generalization gate for sample-driven core changes.
 5. Choose the lightest valid mode.
-6. Write the `description` early; run `evals/trigger_cases.json` before expanding structure.
+6. Write the `description` early (quote it or use `description: |` when it contains `: `, e.g. `Excludes:`); run `evals/trigger_cases.json` before expanding structure.
 7. Create only earned resources. Never create ceremonial directories or duplicate README/SKILL prose.
 8. Export `reports/skill-ir.json` for Production+, public, or cross-platform packages.
 9. Add output evals when correctness, safety, persuasion, or repeatability cannot be shown by trigger tests alone.
@@ -147,7 +147,12 @@ Detailed CLI and safety decisions: [Self-Contained Skill Publishing](references/
 - Keep one creator authority and one root skill entrypoint.
 - Preserve platform-neutral source plus minimal adapters.
 - Public claims must match trigger, output, runtime, install, or human evidence actually present.
-- Upstream ideas are adopted semantically with attribution, not mirrored wholesale.
+- Anything a skill makes that a person will see (installer pages, dialogs, generated documents) must be rendered and looked at before it is called verified; structure and signature checks do not count.
+- When a skill encodes an aesthetic choice (text styles, colours, motion, layouts), prototype at least three restrained directions on the real target content with the real renderer, compare them side by side, then code the winner; never stack effects to look "designed". Run slow or external gates (notarization, review queues) only after a fast local check has passed.
+- Upstream ideas are adopted semantically with attribution, not mirrored wholesale; check the license first, and never copy copyleft (GPL) code into a permissively licensed package.
+- Machine-specific facts a skill records (keychain profile names, local paths, installed tools) say where they live and how to recreate them; secrets and passwords are never written into a skill.
+- Lessons from a real project go into the matching reference of the existing skill, not a new skill.
+- Long-running, output-producing skills declare size tiers with time estimates, ship graded examples, and gate on checks that must reach zero; see items 17–19 of [Skill Engineering Method](references/skill-engineering-method.md).
 
 ## Reference Map
 

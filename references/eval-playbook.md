@@ -3,6 +3,7 @@
 ## 先看触发
 
 - 用户会不会自然说出这句话
+- 改进已有技能时，从该用户最近的真实请求里抽动词和名词补进 should_trigger 与概念词表（例：正式词「发布」之外还有口语「发版」「上架」）；只写正式术语会漏掉最常见的说法
 - description 是否包含关键术语
 - 是否会误触到别的 skill
 - should-trigger、should-not-trigger、near-neighbor 是否都有样例
