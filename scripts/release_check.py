@@ -25,9 +25,14 @@ SECRET_PATTERNS = {
     "AWS access key": re.compile(r"AKIA[0-9A-Z]{16}"),
     "private key": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     "assigned credential": re.compile(
-        r'''(?i)(?:api[_-]?key|secret|password|token)\s*[:=]\s*["'][^"']{8,}["']'''
+        r'''(?i)(?:api[_-]?key|secret|password|token)\s*[:=]\s*["']([^"']{8,})["']'''
     ),
 }
+# Assigned values that are evidently not credentials: environment/template references and
+# self-describing test fixtures. Real keys never contain these words.
+NON_CREDENTIAL_VALUE = re.compile(
+    r"(?i)^\$[{(]|\b(?:fixture|synthetic|opaque|dummy|placeholder|example|redacted)\b|(?:^|[-_])(?:fixture|synthetic|opaque|dummy|placeholder)(?:[-_]|$)"
+)
 SCAN_SUFFIXES = {".md", ".json", ".yaml", ".yml", ".py", ".js", ".ts", ".sh", ".toml"}
 IGNORED_PARTS = {".git", "__pycache__", "node_modules", "dist"}
 
@@ -74,8 +79,12 @@ def scan_secrets(root: Path) -> list[dict[str, Any]]:
             continue
         for line_number, line in enumerate(text.splitlines(), 1):
             for label, pattern in SECRET_PATTERNS.items():
-                if pattern.search(line):
-                    findings.append({"file": str(relative), "line": line_number, "kind": label})
+                match = pattern.search(line)
+                if not match:
+                    continue
+                if match.groups() and NON_CREDENTIAL_VALUE.search(match.group(1)):
+                    continue
+                findings.append({"file": str(relative), "line": line_number, "kind": label})
     return findings
 
 

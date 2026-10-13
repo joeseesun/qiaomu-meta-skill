@@ -224,6 +224,10 @@ def marker_outside_fence(text: str, marker: str, start: int = 0) -> int:
 
 
 def insert_profile(text: str) -> str:
+    return _insert_profile(text).rstrip() + "\n"
+
+
+def _insert_profile(text: str) -> str:
     block = profile_block()
     start = marker_outside_fence(text, PROFILE_START)
     end = marker_outside_fence(text, PROFILE_END, max(0, start)) if start >= 0 else -1
@@ -656,9 +660,19 @@ def publish(args: argparse.Namespace, runner: Runner = run) -> dict[str, Any]:
         ],
         workspace,
     )
+    feature_tip = runner(["git", "rev-parse", "HEAD"], workspace).stdout.strip()
     runner(["git", "fetch", "origin", default], workspace)
+    # A squash merge rewrites history: local default commits that rode along in the PR can
+    # never fast-forward. When every local default commit is inside the merged branch, the
+    # remote default already holds them, so realign instead of pulling.
+    local_default_in_pr = runner(
+        ["git", "merge-base", "--is-ancestor", default, feature_tip], workspace, check=False
+    ).ok
     runner(["git", "switch", default], workspace)
-    runner(["git", "pull", "--ff-only", "origin", default], workspace)
+    if local_default_in_pr:
+        runner(["git", "reset", "--hard", f"origin/{default}"], workspace)
+    else:
+        runner(["git", "pull", "--ff-only", "origin", default], workspace)
     runner(
         [
             "gh",

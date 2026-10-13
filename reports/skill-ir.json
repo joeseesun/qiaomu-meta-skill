@@ -3,7 +3,7 @@
   "generated_at": "2026-10-13",
   "package": {
     "name": "qiaomu-meta-skill",
-    "version": "2.9.0",
+    "version": "2.9.1",
     "owner": "Qiaomu",
     "maturity_tier": "governed",
     "lifecycle_stage": "library",

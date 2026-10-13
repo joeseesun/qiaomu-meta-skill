@@ -144,6 +144,12 @@ class PublishSkillTest(unittest.TestCase):
             self.assertFalse((root / "README.md").exists())
             self.assertEqual(result["default_branch_push"], "forbidden")
 
+    def test_profile_insertion_ends_with_single_newline_and_is_idempotent(self) -> None:
+        once = PUBLISH.insert_profile("# Demo\n\nbody\n")
+        self.assertTrue(once.endswith(PUBLISH.PROFILE_END + "\n"))
+        self.assertFalse(once.endswith("\n\n"))
+        self.assertEqual(PUBLISH.insert_profile(once), once)
+
     def test_profile_assets_are_bundled(self) -> None:
         for name in PUBLISH.PROFILE_ASSETS:
             self.assertTrue((PUBLISH.PROFILE_SOURCE / name).is_file(), name)

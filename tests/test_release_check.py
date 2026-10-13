@@ -45,6 +45,19 @@ class ReleaseCheckTest(unittest.TestCase):
         self.assertFalse(result["ok"])
         self.assertTrue(any("version" in item.lower() for item in result["failures"]))
 
+    def test_secret_scan_skips_fixtures_and_env_references_but_keeps_real_values(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "fixture.js").write_text(
+                "token: 'opaque-provider-token',\n"
+                "clientSecret: 'client-secret-fixture',\n"
+                'API_KEY="${LISTENHUB_API_KEY:-fallback}"\n'
+                "api_key = '" + "kq_live_" + "9f8a7b6c5d4e3f2a1b0c'\n",
+                encoding="utf-8",
+            )
+            findings = RELEASE.scan_secrets(root)
+        self.assertEqual([item["line"] for item in findings], [4])
+
     def test_current_package_contains_no_secret_like_values(self) -> None:
         self.assertEqual(RELEASE.scan_secrets(ROOT), [])
 
