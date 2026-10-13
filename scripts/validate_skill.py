@@ -182,7 +182,15 @@ def validate(root: Path) -> dict[str, Any]:
     if skill_md.exists():
         skill_text = read_text(skill_md)
         skill_bytes = len(skill_text.encode("utf-8"))
-        frontmatter = parse_frontmatter(skill_text)
+        try:
+            frontmatter = parse_frontmatter(skill_text)
+        except Exception as exc:  # yaml.YAMLError without importing yaml at module level
+            frontmatter = {}
+            failures.append(
+                "SKILL.md frontmatter is not valid YAML "
+                f"({str(exc).splitlines()[0]}); quote the description or use `description: |` "
+                "when it contains ': ' or starts with a special character"
+            )
         for field in REQUIRED_FRONTMATTER:
             if not frontmatter.get(field):
                 failures.append(f"SKILL.md missing frontmatter field: {field}")
