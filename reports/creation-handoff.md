@@ -91,3 +91,10 @@
 ## 2.8.4 · 2026-09-27
 
 - Eval playbook: when improving an existing skill, mine the user's recent real requests for trigger verbs and nouns (e.g. 发版 / 上架 besides 发布). Found while updating qiaomu-obsidian-dev 1.10.0, where a release-speed prompt missed the trigger until those words were added.
+
+## v2.12.0（2026-10-16）
+
+- 参考与来源：`qiaomu-screen2video` 的编辑风画板样式实战（12 轮用户对照），详见 `reports/iteration-2026-10-16-v2.12.md`。
+- 候选经验：不叠第二套镜头；“不精致”先查结构；命名缓动令牌；原生像素对比；拼接前统一采样率；否决写入“不要做”表；先出静帧；**审美选择做成参数、先出 3 个方向，不写死**。
+- 取舍：只加方法论条目（第 21 条），不新增脚本；触发评测 23/23。
+- 标注：这些是设计优势，尚无跨项目的验证优势；输出盲评证据仍缺（missing evidence）。
