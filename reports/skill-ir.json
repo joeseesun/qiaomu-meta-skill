@@ -1,9 +1,9 @@
 {
   "schema_version": "2.0.0-qiaomu-lite",
-  "generated_at": "2026-10-13",
+  "generated_at": "2026-10-16",
   "package": {
     "name": "qiaomu-meta-skill",
-    "version": "2.9.1",
+    "version": "2.12.0",
     "owner": "Qiaomu",
     "maturity_tier": "governed",
     "lifecycle_stage": "library",
@@ -145,6 +145,7 @@
       "reports/creation-handoff.md",
       "reports/iteration-2026-08-03-v2.7.md",
       "reports/iteration-2026-08-03.md",
+      "reports/iteration-2026-10-16-v2.12.md",
       "reports/prior-art-research.md",
       "reports/skill-ir.json",
       "reports/skillsmp-integration-2026-08-03.md",

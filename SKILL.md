@@ -4,7 +4,7 @@ description: |
   Research, create, improve, migrate, evaluate, package, install-check, govern, and safely publish qiaomu-flavored agent skills from workflows, prompts, transcripts, docs, SOPs, runbooks, scripts, or notes. Use for new or existing skills, prior-art synthesis, routing/trigger boundaries, trigger or output evals, Skill IR, release gates, README/Profile preparation, GitHub repository and pull-request publication, versioned Releases, clean npx installation, team reuse, and create-and-publish flows. The publication path is self-contained and forbids direct default-branch pushes. Exclude one-off summaries, translations, ordinary docs, non-skill package publishing, and tasks that explicitly should not become a skill.
 metadata:
   author: Qiaomu
-  version: "2.10.0"
+  version: "2.12.0"
   upstream_inspiration: yaojingang/yao-meta-skill; joeseesun/qiaomu-skill-publisher
 ---
 
@@ -152,6 +152,7 @@ Detailed CLI and safety decisions: [Self-Contained Skill Publishing](references/
 - Upstream ideas are adopted semantically with attribution, not mirrored wholesale; check the license first, and never copy copyleft (GPL) code into a permissively licensed package.
 - Machine-specific facts a skill records (keychain profile names, local paths, installed tools) say where they live and how to recreate them; secrets and passwords are never written into a skill.
 - Lessons from a real project go into the matching reference of the existing skill, not a new skill.
+- Visual-output skills must get diversity from structure, not skin: per-unit visual metaphor, mixed layout topologies, style defined as narrative grammar axes, and a runnable check seeded with a real failed output; see item 20 of [Skill Engineering Method](references/skill-engineering-method.md).
 - Long-running, output-producing skills declare size tiers with time estimates, ship graded examples, and gate on checks that must reach zero; see items 17–19 of [Skill Engineering Method](references/skill-engineering-method.md).
 
 ## Reference Map
