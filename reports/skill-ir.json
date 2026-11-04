@@ -1,9 +1,9 @@
 {
   "schema_version": "2.0.0-qiaomu-lite",
-  "generated_at": "2026-10-16",
+  "generated_at": "2026-11-04",
   "package": {
     "name": "qiaomu-meta-skill",
-    "version": "2.12.0",
+    "version": "2.12.1",
     "owner": "Qiaomu",
     "maturity_tier": "governed",
     "lifecycle_stage": "library",
