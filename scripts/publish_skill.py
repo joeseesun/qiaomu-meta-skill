@@ -385,9 +385,11 @@ def prepare_package(
         changes.append("README.md")
         if write:
             readme.write_text(generated_readme(meta, github_owner, repo, upstream), encoding="utf-8")
-    if include_profile:
-        changes.extend(ensure_profile(root, write=write))
-    failures = [] if not write and not readme.exists() else check_readme(root, upstream, require_profile=include_profile)
+    profile_changes = ensure_profile(root, write=write) if include_profile else []
+    changes.extend(profile_changes)
+    # A dry run reports the profile block as a pending change, not as a README failure: the real run inserts it.
+    require_profile = include_profile and (write or not profile_changes)
+    failures = [] if not write and not readme.exists() else check_readme(root, upstream, require_profile=require_profile)
     return {"changes": sorted(set(changes)), "failures": failures}
 
 

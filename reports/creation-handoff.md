@@ -1,3 +1,7 @@
+## v2.12.1 — 2026-11-04
+
+- Publisher fix: `--dry-run` no longer reports "README missing Qiaomu profile" when the real run would insert the profile block itself; it stays listed under `would_change`. Seen while publishing qiaomu-macos-dev 1.0.0.
+
 ## v2.9.1 — 2026-10-13
 
 - Publisher fix: profile insertion now ends README with exactly one newline (it used to leave a blank line at EOF that failed `git diff --check`), with an idempotence test.
